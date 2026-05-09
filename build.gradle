@@ -3,7 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'org.example'
+group = 'org.system'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -20,7 +20,7 @@ dependencies {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'org.example.GameLauncher'
+                'Main-Class': 'org.system.GameLauncher'
         )
     }
 }
