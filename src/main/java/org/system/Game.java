@@ -21,6 +21,7 @@ public class Game {
         JButton tryMeButton = new JButton("Click Me");
         JButton hostServerButton = new JButton("Host a Server");
         JLabel statusLabel = new JLabel("Status: game started.");
+        JButton joinServerButton = new JButton("Join Server");
 
         tryMeButton.addActionListener(new ActionListener() {
             @Override
@@ -33,17 +34,49 @@ public class Game {
         hostServerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    PlayerServer.start();
-                } finally {
-                    statusLabel.setText("Status: Server started. Waiting for players...");
-                }
+                statusLabel.setText("Status: Starting server...");
+                hostServerButton.setEnabled(false); // Prevent double-clicking
+
+                new Thread(() -> {
+                    try {
+                        PlayerServer.start();
+                    } catch (Exception ex) {
+                        SwingUtilities.invokeLater(() -> {
+                            statusLabel.setText("Status: Server failed to start.");
+                            hostServerButton.setEnabled(true);
+                        });
+                    }
+                }).start();
+            }
+        });
+        joinServerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                statusLabel.setText("Connecting to server...");
+                joinServerButton.setEnabled(false); // Prevent multiple connection attempts
+
+                new Thread(() -> {
+                    try {
+                        PlayerClient.start();
+
+                        SwingUtilities.invokeLater(() -> {
+                            statusLabel.setText("Status: Connected to Lobby!");
+                        });
+
+                    } catch (Exception ex) {
+                        SwingUtilities.invokeLater(() -> {
+                            statusLabel.setText("Connection failed: " + ex.getMessage());
+                            joinServerButton.setEnabled(true);
+                        });
+                    }
+                }).start();
             }
         });
 
         frame.add(tryMyLabel);
         frame.add(tryMeButton);
         frame.add(hostServerButton);
+        frame.add(joinServerButton);
         frame.add(statusLabel);
 
         frame.setVisible(true);

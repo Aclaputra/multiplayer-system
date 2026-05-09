@@ -10,7 +10,7 @@ public class GameLauncher {
         String mode = args[0].toLowerCase();
 
         if (mode.equals("server")) {
-            System.out.println("starting in server mode...");;
+            System.out.println("starting in server mode...");
             PlayerServer.start();
         } else if (mode.equals("client")) {
             System.out.println("Starting in client mode...");
@@ -20,7 +20,10 @@ public class GameLauncher {
             nettyThread.start();
 
             Game.start();
-        } else {
+        } else if (mode.equals("game")) {
+            System.out.println("Starting Game Mode.");
+            Game.start();
+        } else{
             System.out.println("Unknown code: " + mode);
         }
     }

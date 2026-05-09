@@ -14,7 +14,7 @@ public class PlayerServer {
                     .channel(NioDatagramChannel.class)
                     .handler(new PlayerServerHandler());
 
-            System.out.println("");
+//            System.out.println("Server started. Waiting for players...");
             b.bind(8080).sync().channel().closeFuture().sync();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
