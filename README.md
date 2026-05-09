@@ -5,6 +5,7 @@ Normal backend things, just use gRPC bruh, this is overkill for your services.
 # tools
 - Java Netty 4.1
 - Java 1.8
+- Java Swing (Game GUI)
 
 # How to run
 - Build the projects & the Jar
