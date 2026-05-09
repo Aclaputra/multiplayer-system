@@ -17,20 +17,34 @@ public class Game {
         frame.setLayout(new FlowLayout());
 
 
-        JLabel label = new JLabel("Click the button");
-        JButton button = new JButton("Click Me");
+        JLabel tryMyLabel = new JLabel("Click the button");
+        JButton tryMeButton = new JButton("Click Me");
+        JButton hostServerButton = new JButton("Host a Server");
+        JLabel statusLabel = new JLabel("Status: game started.");
 
-        button.addActionListener(new ActionListener() {
+        tryMeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                label.setText("Button clicked!");
+                tryMyLabel.setText("Button clicked!");
 
                 PlayerClient.sendMessage("PLAYER_CLICKED");
             }
         });
+        hostServerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    PlayerServer.start();
+                } finally {
+                    statusLabel.setText("Status: Server started. Waiting for players...");
+                }
+            }
+        });
 
-        frame.add(label);
-        frame.add(button);
+        frame.add(tryMyLabel);
+        frame.add(tryMeButton);
+        frame.add(hostServerButton);
+        frame.add(statusLabel);
 
         frame.setVisible(true);
     }
