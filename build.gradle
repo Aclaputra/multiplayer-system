@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation("io.netty:netty-all:4.1.101.Final") // Stable Netty 4.1 version
+}
+
+// This tells Gradle which class to run when you double-click or use java -jar
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.example.GameLauncher'
+        )
+    }
+}
+
+// This ensures dependencies are included in the JAR
+tasks.withType(Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
