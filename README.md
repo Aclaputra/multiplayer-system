@@ -1,4 +1,4 @@
-# UDP System
+# Multiplayer System - UDP Network
 Just testing some TCP and UDP system (only the udp in this repository), most likely used on multiplayer games rather than those 
 Normal backend things, just use gRPC bruh, this is overkill for your services.
 
