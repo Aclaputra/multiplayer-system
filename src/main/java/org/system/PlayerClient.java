@@ -10,13 +10,15 @@ import io.netty.util.CharsetUtil;
 
 import io.netty.channel.socket.DatagramPacket;
 
+import java.awt.*;
 import java.net.InetSocketAddress;
 
 public class PlayerClient {
     private static InetSocketAddress serverAddress;
     private static Channel channel;
+    private static EventLoopGroup group;
     public static void start() {
-        EventLoopGroup group = new NioEventLoopGroup();
+        group = new NioEventLoopGroup();
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
@@ -24,7 +26,6 @@ public class PlayerClient {
                     .handler(new SimpleChannelInboundHandler<DatagramPacket>() { // Handler for DatagramPackets
                         @Override
                         protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) {
-                            // 3. Decode the incoming packet content
                             String s = packet.content().toString(CharsetUtil.UTF_8);
                             System.out.println("Server says: " + s);
                         }
@@ -36,11 +37,25 @@ public class PlayerClient {
 
             System.out.println("UDP Client started.");
 
-            channel.closeFuture().await();
+//            channel.closeFuture().await(); // go to lobby without awaiting,
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } finally {
             group.shutdownGracefully();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void stop() {
+        try {
+            if (channel != null && channel.isOpen()) {
+                sendMessage("DISCONNECTED from Server");
+                channel.close().sync();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (group != null) {
+                group.shutdownGracefully();
+            }
         }
     }
 
