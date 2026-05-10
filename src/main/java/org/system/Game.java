@@ -1,7 +1,6 @@
 package org.system;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,8 +49,11 @@ public class Game {
         // game
         JPanel gamePanel = new JPanel(new BorderLayout());
         JLabel welcomeText = new JLabel("Welcome to the game");
+        JPanel buttonGamePanel = new JPanel();
 
-        gamePanel.add(welcomeText, BorderLayout.CENTER);
+        buttonGamePanel.add(welcomeText, BorderLayout.CENTER);
+        buttonGamePanel.add(tryMeButton, BorderLayout.SOUTH);
+        gamePanel.add(buttonGamePanel, BorderLayout.CENTER);
 
         mainPanel.add(menuPanel, "MENU");
         mainPanel.add(lobbyPanel, "LOBBY");
