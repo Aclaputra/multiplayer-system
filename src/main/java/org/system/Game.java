@@ -47,8 +47,15 @@ public class Game {
         buttonLobbyPanel.add(leaveButton);
         lobbyPanel.add(buttonLobbyPanel, BorderLayout.SOUTH);
 
+        // game
+        JPanel gamePanel = new JPanel(new BorderLayout());
+        JLabel welcomeText = new JLabel("Welcome to the game");
+
+        gamePanel.add(welcomeText, BorderLayout.CENTER);
+
         mainPanel.add(menuPanel, "MENU");
         mainPanel.add(lobbyPanel, "LOBBY");
+        mainPanel.add(gamePanel,"GAME");
 
         tryMeButton.addActionListener(new ActionListener() {
             @Override
@@ -104,6 +111,7 @@ public class Game {
 
         startGameButton.addActionListener(e -> {
             PlayerClient.sendMessage("Game Started!");
+            cardLayout.show(mainPanel, "GAME");
         });
         leaveButton.addActionListener(e -> {
             cardLayout.show(mainPanel, "MENU");
