@@ -36,6 +36,9 @@ v0.03
 - After you Joined and start the game, Click the button it will send our Action data packets between players.
 - Basic things applied, now just do some creativity fellas.
 
+![image](./img.png)
+## Follow my Game Dev twitter on [Twilight Cat](https://x.com/twilight_catt)
+
 # Notes
 - UDP uses DatagramPacket while TCP use simpler way to send messages without packets.
 - UDP only need one group Bootstrap while TCP need bossGroup and the workerGroup with ServerBootstrap the differences
